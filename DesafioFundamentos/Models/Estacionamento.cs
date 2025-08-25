@@ -28,22 +28,24 @@ namespace DesafioFundamentos.Models
             if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
             {
                 Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
-                string inputHoras = Console.ReadLine();
-                int horas;
+                int horas = 0;
 
                 if (int.TryParse(Console.ReadLine(), out horas) || horas < 0)
+                {
+                    horas--;
+                    decimal valorTotal = precoInicial + (precoPorHora * horas);
+                    string placaRemover = veiculos.FirstOrDefault(x => x.ToUpper() == placa.ToUpper());
+                    veiculos.Remove(placaRemover);
+
+                    Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}");
+                }
+
+                else
                 {
                     Console.WriteLine("Quantidade de horas inválida. Usando 0 horas.");
                     return;
                 }
- 
-                decimal valorTotal = precoInicial + (precoPorHora * horas);
 
-                string placaRemover = veiculos.FirstOrDefault(x => x.ToUpper() == placa.ToUpper());
-                veiculos.Remove(placaRemover);
-
-                Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}");
-                
             }
             else
             {
